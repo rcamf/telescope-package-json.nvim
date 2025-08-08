@@ -1,4 +1,8 @@
+
+
+
 # telescope-package-json.nvim
+[![GitHub tag (latest SemVer)](https://img.shields.io/github/v/tag/rcamf/telescope-package-json.nvim?sort=semver)](https://github.com/rcamf/telescope-package-json.nvim/tags)
 
 A [Telescope](https://github.com/nvim-telescope/telescope.nvim) extension for discovering and running `package.json` scripts in your project — right from Neovim.
 
