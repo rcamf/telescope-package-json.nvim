@@ -46,7 +46,7 @@ The extension accepts options via Telescope’s `extensions` table:
 | ----------------- | ---------- | ------------------------------ | ----------------------------------------------------------------------------------------------------- |
 | `use_git_root`    | `boolean`  | `true`                         | Search from the Git root instead of the buffer’s directory.                                           |
 | `entries.columns` | `string[]` | `{ "name", "script", "code" }` | Which fields to display, in order. The options are "name", "script", "code", and "path"               |
-| `entries.format`  | `string`   | `"%-20s %-15s %s"`             | `string.format` pattern for the display line. Placeholders must match the number of `format_columns`. |
+| `entries.format`  | `string`   | `"%-20s %-15s %s"`             | `string.format` pattern for the display line. Placeholders must match the number of `entries.columns`. |
 
 ## 🚀 Usage
 
