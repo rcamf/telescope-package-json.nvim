@@ -132,14 +132,18 @@ local function open_scripts_picker(opts)
 
 	local results = {}
 	for _, package_json in pairs(locations) do
-		local ok, json_string = pcall(readFileSync, package_json)
-		if not ok or json_string == nil then
+		local ok, content = pcall(readFileSync, package_json)
+		if not ok or content == nil then
 			notify("Error reading package.json at " .. package_json, vim.log.levels.ERROR)
 			goto continue
 		end
-		local json_decode = vim.fn.json_decode(json_string)
-		local scripts = json_decode["scripts"]
-		local package_name = json_decode["name"] or "unknown"
+		local ok, json = pcall(vim.fn.json_decode, content)
+		if not ok or not json then
+			notify("Error parsing package.json at " .. package_json, vim.log.levels.ERROR)
+			goto continue
+		end
+		local scripts = json["scripts"]
+		local package_name = json["name"] or "unknown"
 		if scripts ~= nil then
 			for name, code in pairs(scripts) do
 				if name and code then
