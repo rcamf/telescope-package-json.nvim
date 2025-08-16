@@ -116,12 +116,9 @@ local function open_scripts_picker(opts)
 	if buftype == "terminal" then
 		local sep = split(buffer_dir, "//")
 		if #sep > 1 then
-			buffer_dir = sep[2]
+			notify(vim.inspect(sep), vim.log.levels.INFO)
 		else
-			notify(
-				"Unable to determine buffer directory for terminal buffer. Please open a file first.",
-				vim.log.levels.ERROR
-			)
+			notify(sep[2], vim.log.levels.ERROR)
 			return
 		end
 	end
