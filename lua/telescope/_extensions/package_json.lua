@@ -96,11 +96,22 @@ end
 
 local function split(inputstr, sep)
 	if sep == nil then
-		sep = "%s"
+		local t = {}
+		for token in string.gmatch(inputstr, "%S+") do
+			table.insert(t, token)
+		end
+		return t
 	end
-	local t = {}
-	for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
-		table.insert(t, str)
+
+	local t, i = {}, 1
+	while true do
+		local j, k = string.find(inputstr, sep, i, true) -- plain=true
+		if not j then
+			table.insert(t, string.sub(inputstr, i))
+			break
+		end
+		table.insert(t, string.sub(inputstr, i, j - 1))
+		i = k + 1
 	end
 	return t
 end
