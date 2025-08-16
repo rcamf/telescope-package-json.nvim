@@ -106,7 +106,6 @@ local function split(inputstr, sep)
 	local t, i = {}, 1
 	while true do
 		local j, k = string.find(inputstr, sep, i, true)
-		vim.print(j, k)
 		if not j then
 			table.insert(t, string.sub(inputstr, i))
 			break
@@ -127,9 +126,10 @@ local function open_scripts_picker(opts)
 	notify(buftype, vim.log.levels.DEBUG)
 	if buftype == "terminal" then
 		local sep = split(buffer_dir, "//")
-		vim.print(sep)
 		if #sep > 1 then
+			buffer_dir = sep[2]
 		else
+			notify("This command cannot be run from a terminal buffer.", vim.log.levels.WARN)
 			return
 		end
 	end
