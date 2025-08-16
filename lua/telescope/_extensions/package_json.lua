@@ -115,10 +115,9 @@ local function open_scripts_picker(opts)
 	notify(buftype, vim.log.levels.DEBUG)
 	if buftype == "terminal" then
 		local sep = split(buffer_dir, "//")
+		vim.print(sep)
 		if #sep > 1 then
-			notify(vim.inspect(sep), vim.log.levels.INFO)
 		else
-			notify(sep[2], vim.log.levels.ERROR)
 			return
 		end
 	end
