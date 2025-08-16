@@ -112,6 +112,7 @@ local function open_scripts_picker(opts)
 
 	local buffer_dir = vim.fn.expand("%:p:h")
 	local buftype = vim.bo.buftype
+	notify(buftype, vim.log.levels.DEBUG)
 	if buftype == "terminal" then
 		local sep = split(buffer_dir, "//")
 		if #sep > 1 then
