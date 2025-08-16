@@ -9,7 +9,7 @@ local uv = vim.uv
 local notify = vim.notify
 local ok, fnotify = pcall(require, "fidget.notification")
 if ok then
-  notify = fnotify.notify
+	notify = fnotify.notify
 end
 
 local config = {
@@ -94,21 +94,42 @@ local function readFileSync(path)
 	return content
 end
 
+local function split(inputstr, sep)
+	if sep == nil then
+		sep = "%s"
+	end
+	local t = {}
+	for str in string.gmatch(inputstr, "([^" .. sep .. "]+)") do
+		table.insert(t, str)
+	end
+	return t
+end
+
 local function open_scripts_picker(opts)
 	opts = opts or {}
 
 	local effective_config = vim.tbl_deep_extend("force", config, opts)
 
 	local buffer_dir = vim.fn.expand("%:p:h")
+	local buftype = vim.bo.buftype
+	if buftype == "terminal" then
+		local sep = split(buffer_dir, "//")
+		if #sep > 1 then
+			buffer_dir = sep[2]
+		else
+			notify(
+				"Unable to determine buffer directory for terminal buffer. Please open a file first.",
+				vim.log.levels.ERROR
+			)
+			return
+		end
+	end
 	local root_dir = effective_config.use_git_root and get_git_root(buffer_dir) or buffer_dir
 
 	local locations = get_package_json_paths(root_dir, effective_config.search.exclude)
 
 	if #locations == 0 then
-		notify(
-			"No package.json files found in the current directory or its subdirectories.",
-			vim.log.levels.INFO
-		)
+		notify("No package.json files found in the current directory or its subdirectories.", vim.log.levels.INFO)
 		return
 	end
 
