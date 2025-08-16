@@ -105,7 +105,8 @@ local function split(inputstr, sep)
 
 	local t, i = {}, 1
 	while true do
-		local j, k = string.find(inputstr, sep, i, true) -- plain=true
+		local j, k = string.find(inputstr, sep, i, true)
+		vim.print(j, k)
 		if not j then
 			table.insert(t, string.sub(inputstr, i))
 			break
